@@ -48,10 +48,27 @@ $hotels = [
 
 $data = $_GET;
 
-$form_sent = !empty($data);
+$filters = !empty($data);
+
+var_dump($filters);
+
+$newArray = [];
 
 
+// if (!$filters) {
 
+//     $newArray = $hotels;
+// } else {
+
+//     foreach ($hotels as $hotel) {
+
+//         if ($hotel['parking'] === true) {
+
+//             $newArray[] = $hotel;
+//             var_dump($newArray);
+//         }
+//     }
+// }
 
 ?>
 
@@ -96,36 +113,38 @@ $form_sent = !empty($data);
             </thead>
             <tbody>
                 <?php
-                foreach ($hotels as $hotel) {
+                foreach ($hotels as $key => $hotel) {
+                    if (!$filters) {
                 ?>
-                    <tr>
-                        <td><?php echo $hotel['name'] ?></td>
-                        <td><?php echo $hotel['description'] ?></td>
-                        <td>
-                            <?php
+                        <tr>
+                            <td><?php echo $hotel['name'] ?></td>
+                            <td><?php echo $hotel['description'] ?></td>
+                            <td>
+                                <?php
+                                if ($hotel['parking'] === true) {
+                                    echo "Si";
+                                } else {
+                                    echo "No";
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                <?php echo $hotel['vote']  ?>
+                            </td>
+                            <td><?php echo $hotel['distance_to_center'] . " " . "Kilometri" ?></td>
+                        </tr>
+                <?php  } elseif ($filters === 1) { ?>
+                    <?php 
+                        foreach($hotels as $hotel) {
                             if ($hotel['parking'] === true) {
-                                echo "Si";
-                            } else {
-                                echo "No";
-                            }
-                            ?>
-                        </td>
-                        <td>
-                            <?php echo $hotel['vote']  ?>
-                        </td>
-                        <td><?php echo $hotel['distance_to_center'] . " " . "Kilometri" ?></td>
-                    </tr>
-                <?php } ?>
+                             $newArray[] += $hotel;
+
+                             var_dump($newArray);
+                        }
+                        ?>
+                <?php  }}}?>
             </tbody>
         </table>
-
-        <?php 
-        foreach($data as $value) {
-         ?>
-         <li><?php echo $value?> </li>
-
-        <?php } ?>
-
     </div>
 </body>
 
